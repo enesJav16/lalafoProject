@@ -15,6 +15,13 @@ import java.util.Scanner;
 
 public class FavoriteServiceImpl implements FavoriteService {
     FavoriteDao favoriteDao = new FavoriteDaoImpl();
+
+    @Override
+    public String addFavorite(Favorite favorite) {
+        Database.favorites.add(favorite);
+        return "Favorite added";
+    }
+
     @Override
     public Favorite getFavorite(Long id) {
         return favoriteDao.getFavorite(id);
@@ -37,7 +44,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     public static Favorite newFavorite() throws InputMismatchException {
         Scanner scanner = new Scanner(System.in);
-        Favorite favorite=newFavorite();
+        Favorite favorite=new Favorite();
 
         User user = null;
         Annoucement announcement = null;
@@ -46,44 +53,54 @@ public class FavoriteServiceImpl implements FavoriteService {
 
         while (true) {
             try {
-                System.out.println("Give Owner(User) id:");
-                long userId = scanner.nextLong();
+                boolean check = true;
+                while (check) {
+                    System.out.println("Give Owner(User) id:");
+                    long userId = scanner.nextLong();
 
-                for (User u : Database.users) {
-                    if (u.getId() == userId) {
-                        user = u;
+                    for (User u : Database.users) {
+                        if (u.getId() == userId) {
+                            user = u;
+                        }
                     }
-                }
-                if (user != null) {
-                    favorite.setWhoLiked(user);
-                } else {
-                    System.out.println("User not found");
+                    if (user != null) {
+                        favorite.setWhoLiked(user);
+                        check = false;
+                    } else {
+                        System.out.println("User not found");
+                    }
                 }
                 break;
             }catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                scanner.nextLine();
             }
         }
 
         while (true) {
             try {
-                System.out.println("Give Annoucement id:");
-                long announcementId = scanner.nextLong();
-                for (Annoucement a : Database.annoucements) {
-                    if (a.getId() == announcementId) {
-                        announcement = a;
+                boolean check1 = true;
+                while (check1) {
+                    System.out.println("Give Annoucement id:");
+                    long announcementId = scanner.nextLong();
+                    for (Annoucement a : Database.annoucements) {
+                        if (a.getId() == announcementId) {
+                            announcement = a;
+                        }
                     }
-                }
 
-                if (announcement != null) {
-                    favorite.setAnnouncement(announcement);
-                }else {
-                    System.out.println("Announcement not found");
+                    if (announcement != null) {
+                        favorite.setAnnouncement(announcement);
+                        check1 = false;
+                    } else {
+                        System.out.println("Announcement not found");
+                    }
                 }
                 break;
 
             }catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                scanner.nextLine();
             }
         }
         return favorite;
@@ -96,46 +113,59 @@ public class FavoriteServiceImpl implements FavoriteService {
         User user = null;
         Annoucement announcement = null;
 
+
         while (true) {
             try {
-                System.out.println("Give Owner(User) id:");
-                long userId = scanner.nextLong();
+                boolean check = true;
+                while (check) {
+                    System.out.println("Give Owner(User) id:");
+                    long userId = scanner.nextLong();
 
-                for (User u : Database.users) {
-                    if (u.getId() == userId) {
-                        user = u;
+                    for (User u : Database.users) {
+                        if (u.getId() == userId) {
+                            user = u;
+                        }
+                    }
+
+                    if (user != null) {
+                        favorite.setWhoLiked(user);
+                        check = false;
+                    } else {
+                        System.out.println("User not found");
                     }
                 }
-                if (user != null) {
-                    favorite.setWhoLiked(user);
-                } else {
-                    System.out.println("User not found");
-                }
                 break;
+
             }catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                scanner.nextLine();
             }
         }
 
+
         while (true) {
             try {
-                System.out.println("Give Annoucement id:");
-                long announcementId = scanner.nextLong();
-                for (Annoucement a : Database.annoucements) {
-                    if (a.getId() == announcementId) {
-                        announcement = a;
+                boolean check1 = true;
+                while (check1) {
+                    System.out.println("Give Annoucement id:");
+                    long announcementId = scanner.nextLong();
+                    for (Annoucement a : Database.annoucements) {
+                        if (a.getId() == announcementId) {
+                            announcement = a;
+                        }
+                    }
+
+                    if (announcement != null) {
+                        favorite.setAnnouncement(announcement);
+                        check1 = false;
+                    } else {
+                        System.out.println("Announcement not found");
                     }
                 }
-
-                if (announcement != null) {
-                    favorite.setAnnouncement(announcement);
-                }else {
-                    System.out.println("Announcement not found");
-                }
                 break;
-
             }catch (InputMismatchException e) {
                 System.out.println("Wrong input");
+                scanner.nextLine();
             }
         }
         return favorite;
