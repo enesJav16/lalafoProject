@@ -11,8 +11,9 @@ public class Favorite {
         this.announcement = announcement;
     }
 
-    public Favorite() {
+    public Favorite(long id, String whoLiked) {
     }
+
 
     public Long getId() {
         return id;
