@@ -15,4 +15,5 @@ public interface AnnouncementDao {
     void updateAnnouncement(Long id,Annoucement announcement);
 
     void deleteAnnouncement(Long id);
+
 }

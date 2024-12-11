@@ -2,9 +2,11 @@ package dao.daoImpl;
 
 import dao.AnnouncementDao;
 import database.Database;
+import generateId.GenerateId;
 import models.Annoucement;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class AnnouncementDaoImpl implements AnnouncementDao {
 
