@@ -40,10 +40,9 @@ public class Favorite {
 
     @Override
     public String toString() {
-        return "Favorite{" +
-                "id=" + id +
-                ", whoLiked=" + whoLiked +
-                ", announcement=" + announcement +
-                '}';
+        return "\n~~~~~~~~~~~~~~~~~~~~~~~~~" +
+                "\nid          :" + id +
+                "\nwhoLiked    :" + whoLiked +
+                "\nannouncement:" + announcement ;
     }
 }
