@@ -9,11 +9,8 @@ import java.util.List;
 public class FavoriteDaoImpl implements FavoriteDao {
     @Override
     public Favorite getFavorite(Long id) {
-        // Favorite favorite = new Favorite();
-        // favorite.setId(id);
         for (Favorite favorite : Database.favorites) {
             if (favorite.getId().equals(id)) {
-
                 return favorite;
             }
         }
@@ -26,23 +23,39 @@ public class FavoriteDaoImpl implements FavoriteDao {
     }
 
     @Override
-    public Favorite updateFavorite(Long id, Favorite favorite) {
-        for (Favorite favorite1 : Database.favorites) {
-            if (favorite1.getId().equals(id)) {
-                Database.favorites.remove(favorite1);
-                Database.favorites.add(favorite);
-                return favorite;
+    public void updateFavorite(Long id, Favorite favorite) {
+        boolean found = false;
+        for (Favorite f : Database.favorites) {
+            if (f.getId().equals(id)) {
+                found = true;
             }
         }
-        return null;
+        if (!found) {
+            System.out.println("Favorite not found");
+
+        } else {
+            for (Favorite f : Database.favorites) {
+                if (f.getId().equals(id)) {
+                    f.setId(id);
+                    f.setWhoLiked(favorite.getWhoLiked());
+                    f.setAnnouncement(favorite.getAnnouncement());
+                }
+            }
+            System.out.println("Favorite updated");
+            System.out.println(getFavorite(id));
+        }
     }
 
     @Override
     public void deleteFavorite(Long id) {
-        for (Favorite favorite : Database.favorites) {
-            if (favorite.getId().equals(id)) {
-                Database.favorites.remove(getFavorite(id));
-            }
-        }
+       Favorite favorite = getFavorite(id);
+       if (favorite != null) {
+           Database.favorites.remove(favorite);
+           System.out.println("Favorite deleted");
+       }else {
+           System.out.println("Favorite not found");
+
+       }
     }
 }
+
