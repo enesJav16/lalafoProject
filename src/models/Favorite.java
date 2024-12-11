@@ -5,13 +5,12 @@ public class Favorite {
     private User whoLiked;
     private Annoucement announcement;
 
-    public Favorite(Long id, User whoLiked, Annoucement announcement) {
+    public Favorite(Long id, User whoLiked) {
         this.id = id;
         this.whoLiked = whoLiked;
-        this.announcement = announcement;
     }
 
-    public Favorite(long id, String whoLiked) {
+    public Favorite() {
     }
 
 

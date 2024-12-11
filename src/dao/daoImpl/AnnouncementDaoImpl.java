@@ -44,11 +44,27 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     /// UPDATE ANNOUNCEMENT
     @Override
     public void updateAnnouncement(Long id, Annoucement announcement) {
-        for (Annoucement announcement2 : Database.annoucements) {
-            if (id.equals(announcement2.getId())) {
-                announcement2.setName(announcement.getName());
-                announcement2.setDescription(announcement.getDescription());
+        boolean found = false;
+        for(Annoucement announcement2 : Database.annoucements) {
+            if (announcement2.getId().equals(id)) {
+                found = true;
             }
+        }
+
+        if (found) {
+            for (Annoucement announcement2 : Database.annoucements) {
+                if (id.equals(announcement2.getId())) {
+                    announcement2.setName(announcement.getName());
+                    announcement2.setDescription(announcement.getDescription());
+                    announcement2.setOwner(announcement.getOwner());
+                    announcement2.setPrice(announcement.getPrice());
+
+                    System.out.println("Announcement is updated");
+                    System.out.println(getAnnouncementById(id));
+                }
+            }
+        }else{
+            System.out.println("Announcement not found");
         }
     }
 
