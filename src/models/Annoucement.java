@@ -60,12 +60,11 @@ public class Annoucement {
 
     @Override
     public String toString() {
-        return "Annoucement{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", owner=" + owner +
-                '}';
+        return "\n............................." +
+                "\nid         :" + id +
+                "\nname       :" + name +
+                "\ndescription:" + description +
+                "\nprice      :" + price +
+                "\nowner      :" + owner ;
     }
 }
