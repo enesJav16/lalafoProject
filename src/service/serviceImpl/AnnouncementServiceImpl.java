@@ -2,6 +2,7 @@ package service.serviceImpl;
 
 import dao.AnnouncementDao;
 import dao.daoImpl.AnnouncementDaoImpl;
+import database.Database;
 import generateId.GenerateId;
 import models.Annoucement;
 import models.User;
@@ -42,6 +43,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public static Annoucement newAnnoucement(User user) throws InputMismatchException {
         Scanner scanner = new Scanner(System.in);
         Annoucement announcement = new Annoucement();
+
+        Database.users.add(user);
+
         announcement.setId(GenerateId.announcementId());
         System.out.println("Enter title: ");
         announcement.setName(scanner.nextLine());
@@ -63,6 +67,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public static Annoucement updateAnnoucement(User user) throws InputMismatchException {
         Scanner scanner = new Scanner(System.in);
         Annoucement announcement = new Annoucement();
+
+        Database.users.add(user);
+
         System.out.println("Enter title: ");
         announcement.setName(scanner.nextLine());
         System.out.println("Enter description: ");
@@ -70,10 +77,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         while (true) {
             try {
                 System.out.println("Enter price: ");
-                announcement.setPrice(scanner.nextInt());
+                int price = scanner.nextInt();
+                announcement.setPrice(price);
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Enter valid price: ");
+                scanner.nextLine();
+                scanner.close();
             }
         }
         announcement.setOwner(user);
