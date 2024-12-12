@@ -42,6 +42,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     public static Annoucement newAnnoucement(User user) throws InputMismatchException {
         Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
         Annoucement announcement = new Annoucement();
 
         Database.users.add(user);
@@ -54,10 +55,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         while (true) {
             try {
                 System.out.println("Enter price: ");
-                announcement.setPrice(scanner.nextInt());
+                announcement.setPrice(scanner1.nextInt());
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Enter valid price: ");
+                scanner1.nextLine();
             }
 
         }
@@ -66,6 +68,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
     public static Annoucement updateAnnoucement(User user) throws InputMismatchException {
         Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
         Annoucement announcement = new Annoucement();
 
         Database.users.add(user);
@@ -74,16 +77,15 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcement.setName(scanner.nextLine());
         System.out.println("Enter description: ");
         announcement.setDescription(scanner.nextLine());
+
         while (true) {
             try {
                 System.out.println("Enter price: ");
-                int price = scanner.nextInt();
-                announcement.setPrice(price);
+                announcement.setPrice(scanner1.nextInt());
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Enter valid price: ");
-                scanner.nextLine();
-                scanner.close();
+                scanner1.nextLine();
             }
         }
         announcement.setOwner(user);
