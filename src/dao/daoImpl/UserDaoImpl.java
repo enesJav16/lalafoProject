@@ -2,9 +2,13 @@ package dao.daoImpl;
 
 import dao.UserDao;
 import database.Database;
+import models.Annoucement;
+import models.Favorite;
 import models.User;
 
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserDaoImpl implements UserDao {
     @Override
@@ -55,11 +59,56 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id) throws InputMismatchException {
         User user = getUserById(id);
         if (user != null) {
-            Database.users.remove(user);
-            System.out.println("User with id " + id + " deleted successfully");
+            while (true) {
+                try {
+                    System.out.println("How do you want to delete this user?");
+                    System.out.println("Delete all related data (Announcement/Favorite) [0]");
+                    System.out.println("Delete just User                                [1]");
+                    int n=new Scanner(System.in).nextInt();
+
+                    switch (n){
+                        case 0 ->{
+                            Favorite fa = null;
+                            Annoucement an = null;
+
+                            boolean check = false;
+                            boolean check1 = false;
+
+                            for(Annoucement a:Database.annoucements){
+                                if(a.getOwner()==user){
+                                    an=a;
+                                    check = true;
+                                }
+                            }
+                            for(Favorite f:Database.favorites){
+                                if(f.getWhoLiked()==user){
+                                    fa=f;
+                                    check1 = true;
+                                }
+                            }
+                            if(check){
+                                Database.annoucements.remove(an);
+                            }
+                            if (check1) {
+                                Database.favorites.remove(fa);
+                            }
+                            Database.users.remove(user);
+                            System.out.println("User with id " + id + " and all related data is deleted successfully");
+                        }
+                        case 1 ->{
+                            Database.users.remove(user);
+                            System.out.println("User with id " + id + " deleted successfully");
+                        }
+                        default -> {}
+                    }
+                    break;
+                }catch (InputMismatchException e) {
+                    System.out.println("Give number.");
+                }
+            }
         }else {
             System.out.println("User with id " + id + " not found");
         }
